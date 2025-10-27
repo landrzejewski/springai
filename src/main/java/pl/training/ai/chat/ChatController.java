@@ -87,6 +87,11 @@ public class ChatController {
     @Value("classpath:prompts/dev-assistant.st")
     private Resource devAssistantSystemMessage;
 
+    // A system message in LLMs is a special type of input that provides high-level instructions, context, or behavioral
+    // guidelines to the model before it processes user queries. Think of it as the "behind-the-scenes"
+    // instructions that shape how the AI should respond.
+    //
+    // Use it as a guide or a restriction to the model's behavior
     @PostMapping("dev-assistant")
     public Flux<String> devAssistant(
             @RequestBody PromptRequest promptRequest,
