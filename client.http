@@ -120,7 +120,6 @@ Content-Type: application/json
 }
 
 ###
-###
 POST http://localhost:8080/zero-shot
 Content-Type: application/json
 
