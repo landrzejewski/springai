@@ -5,6 +5,11 @@ import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
+import pl.training.ai.chat.ChatController;
+import pl.training.ai.chat.PowerTool;
+
+import java.util.function.Function;
 
 @Configuration
 public class AIConfiguration {
@@ -23,5 +28,11 @@ public class AIConfiguration {
     public ChatClient anthropicChatClient(AnthropicChatModel chatModel) {
         return ChatClient.create(chatModel);
     }*/
+
+    @Description("Calculates power of two")
+    @Bean
+    public Function<ChatController.ValueOfDouble, Double> power() {
+        return new PowerTool();
+    }
 
 }

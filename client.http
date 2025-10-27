@@ -166,5 +166,13 @@ POST http://localhost:8080/tools
 Content-Type: application/json
 
 {
-  "message": "What is a current time in timezone where GB is?"
+  "message": "Calculate 2 to the power of 5"
+}
+
+###
+POST http://localhost:8080/tools
+Content-Type: application/json
+
+{
+  "message": "Return current time"
 }

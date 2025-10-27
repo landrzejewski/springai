@@ -15,6 +15,8 @@ import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.converter.MapOutputConverter;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.support.ToolCallbacks;
+import org.springframework.ai.tool.function.FunctionToolCallback;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -49,6 +51,7 @@ public class ChatController {
                           ChatMemory chatMemory) {
         this.chatClient = ChatClient.builder(chatModel)
                 .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
+                //.defaultToolCallbacks(ToolCallbacks.from(new DateTimeTools()))
                 .build();
         this.chatClients = chatClients;
     }
@@ -222,6 +225,25 @@ public class ChatController {
                 .call()
                 .content();
         return mapOutputConverter.convert(result);
+    }
+
+    public record ValueOfDouble(Double value) {}
+
+    @PostMapping("tools")
+    public Flux<String> tools(@RequestBody PromptRequest promptRequest) {
+        var tools = ToolCallbacks.from(new DateTimeTools()); // This can be an injected bean
+        var mathTools = FunctionToolCallback.builder("power", new PowerTool())
+                .description("Calculates power of two")
+                .inputType(ValueOfDouble.class)
+                .build();
+        return chatClient.prompt()
+                .user(promptRequest.message())
+                .toolCallbacks(tools)
+                //.toolCallbacks(mathTools)
+                .toolNames("power")
+                .toolContext(Map.of("userId", "1234"))
+                .stream()
+                .content();
     }
 
 }
