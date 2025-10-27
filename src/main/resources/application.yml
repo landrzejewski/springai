@@ -1,0 +1,17 @@
+spring:
+  ai:
+    openai:
+      chat:
+        options:
+          model: gpt-4.1
+    ollama:
+      chat:
+        options:
+          model: gemma3:1b
+#          temperature: 1
+#          max-tokens: 10
+#          frequency-penalty: 1.0
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG

@@ -1,0 +1,120 @@
+POST http://localhost:11434/api/generate
+Content-Type: application/json
+
+{
+  "model": "gemma3:1b",
+  "prompt": "Why is the sky blue?",
+  "stream": false
+}
+
+###
+POST http://localhost:11434/api/chat
+Content-Type: application/json
+
+{
+  "model": "gemma3:270m",
+  "messages": [{
+    "role": "user",
+    "content": "What is Ollama?"
+  }],
+  "stream": false
+}
+
+###
+POST http://localhost:8080/chat
+Content-Type: application/json
+
+{
+  "message":"What is Ollama?"
+}
+
+###
+POST http://localhost:8080/jokes?topic=llms
+Content-Type: application/json
+
+###
+POST http://localhost:8080/tourist-attractions
+Content-Type: application/json
+Accept: application/stream+json
+
+###
+POST http://localhost:8080/dev-assistant?programmingLanguage=python
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "Explain how to sent a http request in Java / build a rest client?"
+}
+
+###
+POST http://localhost:8080/conversation
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "My name is Luc."
+}
+
+###
+POST http://localhost:8080/conversation
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "What is my name?"
+}
+
+###
+POST http://localhost:8080/stateful-conversation
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "My name is Luc."
+}
+
+###
+POST http://localhost:8080/stateful-conversation
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "What is my name?"
+}
+
+###
+POST http://localhost:8080/structured-by-prompt
+Content-Type: application/json
+
+{
+   "message": "Extract the key information from the following text delimited by triple backticks and format it in JSON.\n Text : ```Emily Thompson booked a flight on October 10, 2024. She will be flying from New York (JFK) to Los Angeles (LAX) on flight number AA123.The departure time is 8:00 AM, and the arrival time is 11:30 AM. She has a carry-on bag and a checked bag. Her ticket price was $450.00, and she will be seated in 14A.```"
+}
+
+###
+#{
+#  "message": "Extract the key information from the following text delimited by triple backticks and format it in JSON.\n Text : ```Max is 30 years old```"
+#}
+
+###
+POST http://localhost:8080/structured-by-type
+Content-Type: application/json
+
+{
+  "message": "Give me information about the best fantasy book"
+}
+
+###
+POST http://localhost:8080/structured-by-parametrized-type
+Content-Type: application/json
+
+{
+  "message": "Give me information about the best fantasy books"
+}
+
+###
+POST http://localhost:8080/structured-as-map
+Content-Type: application/json
+
+{
+  "message": "Give me information about the best fantasy books (title and author)"
+}
