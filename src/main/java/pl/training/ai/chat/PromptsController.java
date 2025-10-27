@@ -19,7 +19,7 @@ public class PromptsController {
 
     private final ChatClient chatClient;
 
-    public PromptsController(@Qualifier("openAIChatClient") ChatClient chatClient) {
+    public PromptsController(@Qualifier("openaiChatClient") ChatClient chatClient) {
         this.chatClient = chatClient;
     }
 
