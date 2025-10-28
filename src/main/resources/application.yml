@@ -1,3 +1,4 @@
+
 spring:
   ai:
     openai:
@@ -16,3 +17,5 @@ spring:
 logging:
   level:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+server:
+  port: 8000

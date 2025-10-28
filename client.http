@@ -175,3 +175,11 @@ Content-Type: application/json
 {
   "message": "Return current time"
 }
+
+###
+POST http://localhost:8080/tools
+Content-Type: application/json
+
+{
+  "message": "Return current time"
+}

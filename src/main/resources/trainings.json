@@ -1,16 +1,16 @@
 [
   {
-    "code": "hibernate jpa",
+    "code": "hibernate-jpa",
     "title": "Zaawansowane aspekty Jakarta Persistence API i Hibernate",
     "price": "2150 PLN"
   },
   {
-    "code": "hibernate jpa",
+    "code": "hibernate-jpa-adv",
     "title": "Utrwalanie danych z użyciem JPA i Hibernate",
     "price": "Na zamówienie"
   },
   {
-    "code": "spock java",
+    "code": "spock-java",
     "title": "Spock dla programistów Javy",
     "price": "Na zamówienie"
   },
