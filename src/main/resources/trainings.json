@@ -1,0 +1,102 @@
+[
+  {
+    "code": "hibernate jpa",
+    "title": "Zaawansowane aspekty Jakarta Persistence API i Hibernate",
+    "price": "2150 PLN"
+  },
+  {
+    "code": "hibernate jpa",
+    "title": "Utrwalanie danych z użyciem JPA i Hibernate",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "spock java",
+    "title": "Spock dla programistów Javy",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "java-card tls ssl cryptography",
+    "title": "Kryptografia na platformie Java w praktyce",
+    "price": "2950 PLN"
+  },
+  {
+    "code": "java-card cryptography security java",
+    "title": "Programowanie kart Java Card",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "efficiency java",
+    "title": "Wydajność aplikacji na platformie Java",
+    "price": "3550 PLN"
+  },
+  {
+    "code": "java",
+    "title": "Zaawansowane aspekty języka Java",
+    "price": "2150 PLN"
+  },
+  {
+    "code": "functional-programming streams java",
+    "title": "Reactive streams w języku Java",
+    "price": "2150 PLN"
+  },
+  {
+    "code": "ocpjd",
+    "title": "Przygotowanie do uzyskania certyfikatu OCP Java Developer",
+    "price": "4345 PLN"
+  },
+  {
+    "code": "java",
+    "title": "Nowoczesna Java",
+    "price": "2365 PLN"
+  },
+  {
+    "code": "java",
+    "title": "Programowanie w języku Java",
+    "price": "2805 PLN"
+  },
+  {
+    "code": "multithreading java",
+    "title": "Wielowątkowe i asynchroniczne aplikacje w Javie",
+    "price": "2150 PLN"
+  },
+  {
+    "code": "wildfly jboss jee java",
+    "title": "Administracja serwerem JBoss",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "log4j jira jvm jenkins",
+    "title": "Narzędzia programisty Java",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "cdi quarkus java",
+    "title": "Quarkus framework",
+    "price": "Na zamówienie"
+  },
+  {
+    "code": "jee microservices spring java",
+    "title": "Architektura mikroserwisów z wykorzystaniem Spring Cloud",
+    "price": "2805 PLN"
+  },
+  {
+    "code": "spring",
+    "title": "Spring framework / Spring Boot",
+    "price": "4345 PLN"
+  },
+  {
+    "code": "spring",
+    "title": "Clean Architecture z użyciem Spring Boot",
+    "price": "2150 PLN"
+  },
+  {
+    "code": "kotlin spring",
+    "title": "Spring Boot szybki start w języku Kotlin",
+    "price": "2550 PLN"
+  },
+  {
+    "code": "spring",
+    "title": "Spring Boot szybki start",
+    "price": "2550 PLN"
+  }
+]
