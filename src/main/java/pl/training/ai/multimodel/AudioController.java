@@ -1,9 +1,13 @@
 package pl.training.ai.multimodel;
 
+import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
 import org.springframework.ai.openai.OpenAiAudioSpeechModel;
 import org.springframework.ai.openai.OpenAiAudioSpeechOptions;
+import org.springframework.ai.openai.OpenAiAudioTranscriptionModel;
 import org.springframework.ai.openai.api.OpenAiAudioApi;
 import org.springframework.ai.openai.audio.speech.SpeechPrompt;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +19,14 @@ import pl.training.ai.chat.PromptRequest;
 public class AudioController {
 
     private final OpenAiAudioSpeechModel openAiAudioSpeechModel;
+    private final OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel;
 
-    public AudioController(OpenAiAudioSpeechModel openAiAudioSpeechModel) {
+    @Value("classpath:audio.mp3")
+    private Resource audio;
+
+    public AudioController(OpenAiAudioSpeechModel openAiAudioSpeechModel, OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel) {
         this.openAiAudioSpeechModel = openAiAudioSpeechModel;
+        this.openAiAudioTranscriptionModel = openAiAudioTranscriptionModel;
     }
 
     @GetMapping("generate-audio")
@@ -37,7 +46,15 @@ public class AudioController {
                 .header(HttpHeaders.CONTENT_TYPE, "audio/mpeg")
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"audio.mp3\"")
                 .body(bytes);
+    }
 
+    @GetMapping("transcription")
+    public String transcription() {
+        var audioTranscription = new AudioTranscriptionPrompt(audio);
+        return openAiAudioTranscriptionModel
+                .call(audioTranscription)
+                .getResult()
+                .getOutput();
     }
 
 }
