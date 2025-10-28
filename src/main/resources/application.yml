@@ -8,7 +8,7 @@ spring:
     ollama:
       chat:
         options:
-          model: granite3.1-moe:1b
+          model: qwen3:0.6b
     #          temperature: 1
     #          max-tokens: 10
     #          frequency-penalty: 1.0

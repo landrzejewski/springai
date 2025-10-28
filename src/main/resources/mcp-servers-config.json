@@ -1,14 +1,5 @@
 {
   "mcpServers": {
-    "brave-search": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-brave-search"
-      ],
-      "env": {
-      }
-    },
     "current-time": {
       "command": "java",
       "args": [

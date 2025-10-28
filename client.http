@@ -213,5 +213,5 @@ Content-Type: application/json
 Accept: application/stream+json
 
 {
-  "message": "Search current gold price in web"
+  "message": "get current time (return only time)"
 }
