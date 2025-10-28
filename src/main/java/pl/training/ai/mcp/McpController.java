@@ -15,7 +15,7 @@ public class McpController {
     private final ChatClient chatClient;
     private final ToolCallbackProvider toolCallbackProvider;
 
-    public McpController(@Qualifier("openaiChatClient") ChatClient chatClient, ToolCallbackProvider tools) {
+    public McpController(@Qualifier("ollamaChatClient") ChatClient chatClient, ToolCallbackProvider tools) {
         this.chatClient = chatClient;
         this.toolCallbackProvider = tools;
     }
