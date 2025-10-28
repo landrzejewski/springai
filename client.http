@@ -206,3 +206,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/transcription
+
+#####
+POST http://localhost:8000/search
+Content-Type: application/json
+Accept: application/stream+json
+
+{
+  "message": "Search current gold price in web"
+}

@@ -6,6 +6,8 @@ https://www.youtube.com/@pixaroma
 https://github.com/comfyanonymous/ComfyUI
 https://github.com/Comfy-Org/ComfyUI-Manager
 
+https://github.com/erew123/alltalk_tts/tree/alltalkbeta
+
 
 - dodawanie spotkania
 - usunąć spotkanie

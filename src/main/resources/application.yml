@@ -8,10 +8,16 @@ spring:
     ollama:
       chat:
         options:
-          model: gemma3:1b
-#          temperature: 1
-#          max-tokens: 10
-#          frequency-penalty: 1.0
+          model: granite3.1-moe:1b
+    #          temperature: 1
+    #          max-tokens: 10
+    #          frequency-penalty: 1.0
+    mcp:
+      client:
+        toolcallback:
+          enabled: true
+        stdio:
+          servers-configuration: classpath:mcp-servers-config.json
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-doc
     username: admin
