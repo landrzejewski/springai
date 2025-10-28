@@ -192,3 +192,6 @@ Content-Type: application/json
   "message": "Image of castle in clouds"
 }
 
+###
+GET http://localhost:8000/generate-description
+Content-Type: application/json
