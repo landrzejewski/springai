@@ -1,4 +1,3 @@
-
 spring:
   ai:
     openai:
@@ -13,7 +12,15 @@ spring:
 #          temperature: 1
 #          max-tokens: 10
 #          frequency-penalty: 1.0
-
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-doc
+    username: admin
+    password: admin
+  vectorstore:
+    pgvector:
+    index-type: HNSW
+    distance-type: COSINE_DISTANCE
+    dimension: 1536
 logging:
   level:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
