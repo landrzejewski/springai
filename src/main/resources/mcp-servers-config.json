@@ -4,7 +4,7 @@
       "command": "java",
       "args": [
         "-jar",
-        "/home/student/Pulpit/spring-ai-examples/model-context-protocol/web-search/mcp-server/target/mcp-server-0.0.1-SNAPSHOT.jar"
+        "./mcp-server/target/mcp-server-0.0.1-SNAPSHOT.jar"
       ],
       "env": {
       }
