@@ -177,9 +177,9 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/tools
+POST http://localhost:8000/trainings
 Content-Type: application/json
 
 {
-  "message": "Return current time"
+  "message": "Give me a list of java trainings"
 }
