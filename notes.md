@@ -14,3 +14,6 @@ https://github.com/erew123/alltalk_tts/tree/alltalkbeta
 - przesunąć
 - wyświetlanie raportu spotkań (struktura)
 
+- generator wpisów na blog podróżniczy - zdjęcie z interpretacją + opis miejsca
+- wykorzystaj tool w działający w oparciu o mcp
+- zadbaj o bezpieczeństwo 
