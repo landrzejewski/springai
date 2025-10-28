@@ -5,4 +5,4 @@ QUESTION:
 {input}
 
 DOCUMENTS:
-{documents}vv
+{documents}
