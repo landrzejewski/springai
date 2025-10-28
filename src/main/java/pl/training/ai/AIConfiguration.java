@@ -1,18 +1,26 @@
 package pl.training.ai;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.reader.ExtractedTextFormatter;
 import org.springframework.ai.reader.TextReader;
+import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
+import org.springframework.ai.reader.pdf.config.PdfDocumentReaderConfig;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import pl.training.ai.chat.ChatController;
 import pl.training.ai.chat.PowerTool;
 
@@ -52,7 +60,7 @@ public class AIConfiguration {
     private Resource vectorStore;
 
     @Bean
-    public SimpleVectorStore vectorStore(@Qualifier("openAiEmbeddingModel") EmbeddingModel embeddingModel) throws IOException {
+    public SimpleVectorStore localVectorStore(@Qualifier("openAiEmbeddingModel") EmbeddingModel embeddingModel) throws IOException {
         var simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
         if (vectorStore.exists()) {
             System.out.println("Loading vector store");
@@ -71,5 +79,36 @@ public class AIConfiguration {
         }
         return simpleVectorStore;
     }
+
+    @Autowired
+    private JdbcClient jdbcClient;
+
+    @Value("classpath:spring-framework.pdf")
+    private Resource springDoc;
+
+    @Autowired
+    private PgVectorStore externalVectorStore;
+
+    @PostConstruct
+    public void initVectorStore() {
+        var count = jdbcClient.sql("select count(*) from vector_store")
+                .query(Integer.class)
+                .single();
+        if (count == 0) {
+            System.out.println("Creating pgvector store");
+            var config = PdfDocumentReaderConfig.builder()
+                    .withPageExtractedTextFormatter(new ExtractedTextFormatter.Builder()
+                            .withNumberOfBottomTextLinesToDelete(0)
+                            .withNumberOfTopPagesToSkipBeforeDelete(0)
+                            .build())
+                    .withPagesPerDocument(1)
+                    .build();
+            var pdfReader = new PagePdfDocumentReader(springDoc, config);
+            var textSplitter = new TokenTextSplitter();
+            var documents = textSplitter.apply(pdfReader.get());
+            externalVectorStore.accept(documents);
+        }
+    }
+
 
 }
