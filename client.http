@@ -183,3 +183,12 @@ Content-Type: application/json
 {
   "message": "Give me a list of spring trainings"
 }
+
+###
+GET http://localhost:8000/generate-image
+Content-Type: application/json
+
+{
+  "message": "Image of castle in clouds"
+}
+

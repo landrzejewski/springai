@@ -89,7 +89,7 @@ public class AIConfiguration {
     @Autowired
     private PgVectorStore externalVectorStore;
 
-    @PostConstruct
+    /*@PostConstruct
     public void initVectorStore() {
         var count = jdbcClient.sql("select count(*) from vector_store")
                 .query(Integer.class)
@@ -108,7 +108,7 @@ public class AIConfiguration {
             var documents = textSplitter.apply(pdfReader.get());
             externalVectorStore.accept(documents);
         }
-    }
+    }*/
 
 
 }

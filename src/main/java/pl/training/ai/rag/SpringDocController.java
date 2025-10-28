@@ -34,7 +34,7 @@ public class SpringDocController {
         this.vectorStore = vectorStore;
     }
 
-    @PostMapping("trainings")
+    @PostMapping("spring-doc")
     public String trainings(@RequestBody PromptRequest promptRequest) {
         var promptTemplate = new PromptTemplate(springDocPrompt);
         var params = new HashMap<String, Object>();
