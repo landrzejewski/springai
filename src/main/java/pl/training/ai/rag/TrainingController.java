@@ -2,7 +2,7 @@ package pl.training.ai.rag;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
-import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,7 @@ public class TrainingController {
 
     private final ChatClient chatClient;
 
-    public TrainingController(OllamaChatModel chatModel, VectorStore vectorStore) {
+    public TrainingController(OpenAiChatModel chatModel, VectorStore vectorStore) {
         this.chatClient = ChatClient.builder(chatModel)
                 .defaultAdvisors(new QuestionAnswerAdvisor(vectorStore))
                 .build();

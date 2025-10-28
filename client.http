@@ -181,5 +181,5 @@ POST http://localhost:8000/trainings
 Content-Type: application/json
 
 {
-  "message": "Give me a list of java trainings"
+  "message": "Give me a list of spring trainings"
 }

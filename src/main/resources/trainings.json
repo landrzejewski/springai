@@ -20,11 +20,6 @@
     "price": "2150"
   },
   {
-    "code": "functional-programming streams java",
-    "title": "Reactive streams w języku Java",
-    "price": "2150"
-  },
-  {
     "code": "ocpjd",
     "title": "Przygotowanie do uzyskania certyfikatu OCP Java Developer",
     "price": "4345"
@@ -43,11 +38,6 @@
     "code": "multithreading java",
     "title": "Wielowątkowe i asynchroniczne aplikacje w Javie",
     "price": "2150"
-  },
-  {
-    "code": "wildfly",
-    "title": "Administracja serwerem JBoss",
-    "price": "Na zamówienie"
   },
   {
     "code": "jee",

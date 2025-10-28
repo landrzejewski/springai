@@ -52,7 +52,7 @@ public class AIConfiguration {
     private Resource vectorStore;
 
     @Bean
-    public SimpleVectorStore vectorStore(@Qualifier("ollamaEmbeddingModel") EmbeddingModel embeddingModel) throws IOException {
+    public SimpleVectorStore vectorStore(@Qualifier("openAiEmbeddingModel") EmbeddingModel embeddingModel) throws IOException {
         var simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
         if (vectorStore.exists()) {
             System.out.println("Loading vector store");
