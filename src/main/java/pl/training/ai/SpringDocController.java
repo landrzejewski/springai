@@ -1,7 +1,9 @@
 package pl.training.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
@@ -20,11 +22,12 @@ public class SpringDocController {
     private final ChatClient chatClient;
     private final PromptTemplate promptTemplate;
 
-    public SpringDocController(OllamaChatModel chatModel, 
-                             PgVectorStore vectorStore,
-                             @Value("classpath:prompts/detailed-response.st") Resource promptResource) {
+    public SpringDocController(OllamaChatModel chatModel, PgVectorStore vectorStore, ChatMemory chatMemory,
+                               @Value("classpath:prompts/detailed-response.st") Resource promptResource) {
         this.chatClient = ChatClient.builder(chatModel)
-                .defaultAdvisors(new QuestionAnswerAdvisor(vectorStore))
+                .defaultAdvisors(
+                        MessageChatMemoryAdvisor.builder(chatMemory).build(),
+                        new QuestionAnswerAdvisor(vectorStore))
                 .build();
         this.promptTemplate = new PromptTemplate(promptResource);
     }
