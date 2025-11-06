@@ -1,4 +1,4 @@
-You are an expert Spring Framework instructor with deep knowledge of Spring Data JPA.
+You are an expert Java developer.
 Please provide a comprehensive, detailed response that includes:
 - Multiple relevant code examples with full implementations
 - Step-by-step explanations with numbered sections

@@ -137,6 +137,11 @@
             color: #eceff4; /* Nord6 */
             line-height: 1.8;
         }
+        
+        /* Ensure all child elements have good visibility */
+        .response-content * {
+            color: inherit;
+        }
 
         /* Markdown Styles */
         .response-content h1 {
@@ -190,27 +195,31 @@
         .response-content p {
             margin-bottom: 16px;
             line-height: 1.8;
+            color: #eceff4; /* Ensure text is visible */
         }
 
         .response-content ul,
         .response-content ol {
             margin-bottom: 16px;
             padding-left: 32px;
+            color: #eceff4; /* Nord6 */
         }
 
         .response-content li {
             margin-bottom: 10px;
             line-height: 1.7;
+            color: #eceff4; /* Nord6 */
         }
 
         .response-content code {
-            background: #434c5e; /* Nord2 */
-            padding: 3px 8px;
+            background: #3b4252; /* Darker background for better contrast */
+            padding: 4px 8px;
             border-radius: 4px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 14px;
-            color: #88c0d0; /* Nord8 */
+            color: #88c0d0; /* Nord8 - bright cyan */
             border: 1px solid #4c566a; /* Nord3 */
+            font-weight: 500;
         }
 
         .response-content pre {
@@ -226,41 +235,44 @@
         .response-content pre code {
             background: transparent;
             padding: 0;
-            color: #abb2bf;
+            color: #d8dee9;  /* Brighter default text color */
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.8;  /* Better line spacing */
             border: none;
             display: block;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
         }
         
-        /* Enhanced syntax highlighting for better visibility */
-        .hljs-keyword { color: #c678dd !important; font-weight: bold; }
-        .hljs-string { color: #98c379 !important; }
-        .hljs-number { color: #d19a66 !important; }
-        .hljs-literal { color: #56b6c2 !important; }
-        .hljs-comment { color: #5c6370 !important; font-style: italic; }
-        .hljs-function { color: #61afef !important; }
-        .hljs-class { color: #e5c07b !important; }
-        .hljs-title { color: #61afef !important; font-weight: bold; }
-        .hljs-params { color: #abb2bf !important; }
-        .hljs-meta { color: #56b6c2 !important; }
-        .hljs-attribute { color: #d19a66 !important; }
-        .hljs-tag { color: #e06c75 !important; }
-        .hljs-name { color: #e06c75 !important; }
-        .hljs-selector-class { color: #e5c07b !important; }
-        .hljs-selector-id { color: #61afef !important; }
-        .hljs-type { color: #e5c07b !important; }
-        .hljs-built_in { color: #e5c07b !important; }
-        .hljs-annotation { color: #e5c07b !important; }
+        /* Enhanced syntax highlighting with better contrast */
+        .hljs-keyword { color: #d08770 !important; font-weight: bold; }  /* Bright orange for keywords */
+        .hljs-string { color: #a3be8c !important; }  /* Green for strings */
+        .hljs-number { color: #b48ead !important; }  /* Purple for numbers */
+        .hljs-literal { color: #88c0d0 !important; }  /* Cyan for literals */
+        .hljs-comment { color: #616e88 !important; font-style: italic; }  /* Muted gray for comments */
+        .hljs-function { color: #88c0d0 !important; font-weight: 600; }  /* Bright cyan for functions */
+        .hljs-class { color: #ebcb8b !important; font-weight: 600; }  /* Yellow for classes */
+        .hljs-title { color: #8fbcbb !important; font-weight: bold; }  /* Teal for titles */
+        .hljs-params { color: #d8dee9 !important; }  /* Light gray for params */
+        .hljs-meta { color: #b48ead !important; }  /* Purple for meta */
+        .hljs-attribute { color: #d08770 !important; }  /* Orange for attributes */
+        .hljs-tag { color: #bf616a !important; }  /* Red for tags */
+        .hljs-name { color: #bf616a !important; }  /* Red for names */
+        .hljs-selector-class { color: #ebcb8b !important; }  /* Yellow for selectors */
+        .hljs-selector-id { color: #8fbcbb !important; }  /* Teal for IDs */
+        .hljs-type { color: #ebcb8b !important; }  /* Yellow for types */
+        .hljs-built_in { color: #81a1c1 !important; font-weight: 600; }  /* Light blue for built-ins */
+        .hljs-annotation { color: #ebcb8b !important; }  /* Yellow for annotations */
+        .hljs-variable { color: #88c0d0 !important; }  /* Cyan for variables */
+        .hljs-regexp { color: #bf616a !important; }  /* Red for regex */
+        .hljs-symbol { color: #b48ead !important; }  /* Purple for symbols */
 
         .response-content blockquote {
-            border-left: 4px solid #6db33f;
+            border-left: 4px solid #88c0d0; /* Nord8 */
             padding-left: 20px;
             margin: 20px 0;
-            color: #555;
+            color: #d8dee9; /* Nord4 */
             font-style: italic;
-            background: #f9fafb;
+            background: #3b4252; /* Nord1 */
             padding: 16px 20px;
             border-radius: 4px;
         }
@@ -274,19 +286,20 @@
 
         .response-content table th,
         .response-content table td {
-            border: 1px solid #e1e8ed;
+            border: 1px solid #434c5e; /* Nord2 */
             padding: 12px 16px;
             text-align: left;
+            color: #eceff4; /* Nord6 */
         }
 
         .response-content table th {
-            background: #f6f8fa;
+            background: #3b4252; /* Nord1 */
             font-weight: 600;
-            color: #2c3e50;
+            color: #eceff4; /* Nord6 */
         }
 
         .response-content table tr:nth-child(even) {
-            background: #f9fafb;
+            background: #434c5e; /* Nord2 */
         }
 
         .response-content a {
@@ -307,7 +320,7 @@
 
         .response-content hr {
             border: none;
-            border-top: 2px solid #e1e8ed;
+            border-top: 2px solid #434c5e; /* Nord2 */
             margin: 32px 0;
         }
 

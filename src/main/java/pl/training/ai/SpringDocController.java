@@ -22,12 +22,10 @@ public class SpringDocController {
     private final ChatClient chatClient;
     private final PromptTemplate promptTemplate;
 
-    public SpringDocController(OllamaChatModel chatModel, PgVectorStore vectorStore, ChatMemory chatMemory,
+    public SpringDocController(OllamaChatModel chatModel, PgVectorStore vectorStore,
                                @Value("classpath:prompts/detailed-response.st") Resource promptResource) {
         this.chatClient = ChatClient.builder(chatModel)
-                .defaultAdvisors(
-                        MessageChatMemoryAdvisor.builder(chatMemory).build(),
-                        new QuestionAnswerAdvisor(vectorStore))
+                .defaultAdvisors(new QuestionAnswerAdvisor(vectorStore))
                 .build();
         this.promptTemplate = new PromptTemplate(promptResource);
     }
