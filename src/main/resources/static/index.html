@@ -319,6 +319,11 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
 
         .error {
             background: #fee;
@@ -359,7 +364,7 @@
 </head>
 <body>
 <div class="container">
-    <h1><span class="spring-icon">🌱</span> Spring Doc Chat</h1>
+    <h1>Spring Doc Chat</h1>
 
     <div class="input-group">
         <label for="messageInput">Your Question:</label>
@@ -401,6 +406,13 @@
 
     let accumulatedText = '';
     let renderTimeout = null;
+
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 
     async function sendMessage() {
         const messageInput = document.getElementById('messageInput');
@@ -462,11 +474,8 @@
                 // Directly add the chunk to accumulated text
                 accumulatedText += chunk;
 
-                // Debounced rendering for better performance
-                if (renderTimeout) clearTimeout(renderTimeout);
-                renderTimeout = setTimeout(() => {
-                    renderMarkdown(accumulatedText);
-                }, 100);
+                // Show plain text during streaming with dark background
+                responseContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 0; line-height: 1.8; background: #282c34; color: #ffffff; padding: 20px; border-radius: 8px; font-size: 15px;">${escapeHtml(accumulatedText)}<span style="color: #6db33f; animation: blink 1s infinite; font-weight: bold;">▊</span></pre>`;
 
                 // Auto-scroll to bottom
                 responseContainer.scrollTop = responseContainer.scrollHeight;
@@ -505,6 +514,10 @@
                     pre.appendChild(badge);
                 }
             });
+            
+            // Scroll to top after rendering
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.scrollTop = 0;
         } catch (error) {
             console.error('Markdown rendering error:', error);
             responseContent.textContent = text; // Fallback to plain text

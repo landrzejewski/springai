@@ -6,7 +6,7 @@ spring:
           model: bge-m3:latest
       chat:
         options:
-          model: qwen3:1.7b
+          model: qwen3:1.7b # gpt-oss:120b
           temperature: 0.8
           numPredict: 16000
           topP: 0.95
