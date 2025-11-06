@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.0/marked.min.js"></script>
 
     <!-- Highlight.js for code syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/nord.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
@@ -17,6 +17,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/properties.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
 
     <style>
         * {
@@ -27,23 +30,24 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
-            background: #f5f7fa;
+            background: #2e3440; /* Nord0 */
             min-height: 100vh;
             padding: 40px 20px;
         }
 
         .container {
-            background: white;
+            background: #3b4252; /* Nord1 */
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
             padding: 40px;
+            border: 1px solid #434c5e; /* Nord2 */
         }
 
         h1 {
-            color: #2c3e50;
+            color: #eceff4; /* Nord6 */
             margin-bottom: 30px;
             text-align: center;
             font-size: 32px;
@@ -51,7 +55,7 @@
         }
 
         .spring-icon {
-            color: #6db33f;
+            color: #88c0d0; /* Nord8 - frost blue */
         }
 
         .input-group {
@@ -61,7 +65,7 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            color: #d8dee9; /* Nord4 */
             font-weight: 600;
             font-size: 14px;
         }
@@ -69,7 +73,9 @@
         textarea {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e1e8ed;
+            border: 2px solid #434c5e; /* Nord2 */
+            background: #2e3440; /* Nord0 */
+            color: #eceff4; /* Nord6 */
             border-radius: 8px;
             font-size: 15px;
             font-family: inherit;
@@ -80,12 +86,12 @@
 
         textarea:focus {
             outline: none;
-            border-color: #6db33f;
+            border-color: #88c0d0; /* Nord8 */
         }
 
         button {
-            background: #6db33f;
-            color: white;
+            background: #88c0d0; /* Nord8 */
+            color: #2e3440; /* Nord0 */
             border: none;
             padding: 12px 28px;
             border-radius: 8px;
@@ -97,7 +103,7 @@
         }
 
         button:hover:not(:disabled) {
-            background: #5ca632;
+            background: #81a1c1; /* Nord9 */
             transform: translateY(-1px);
         }
 
@@ -113,8 +119,8 @@
         .response-container {
             margin-top: 30px;
             padding: 0;
-            background: #ffffff;
-            border: 1px solid #e1e8ed;
+            background: #2e3440; /* Nord0 */
+            border: 1px solid #434c5e; /* Nord2 */
             border-radius: 8px;
             min-height: 200px;
             max-height: 700px;
@@ -128,7 +134,7 @@
 
         .response-content {
             padding: 32px;
-            color: #2c3e50;
+            color: #eceff4; /* Nord6 */
             line-height: 1.8;
         }
 
@@ -138,8 +144,8 @@
             margin-top: 32px;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 3px solid #6db33f;
-            color: #2c3e50;
+            border-bottom: 3px solid #88c0d0; /* Nord8 */
+            color: #eceff4; /* Nord6 */
             font-weight: 700;
         }
 
@@ -151,17 +157,17 @@
             font-size: 26px;
             margin-top: 32px;
             margin-bottom: 16px;
-            color: #2c3e50;
+            color: #e5e9f0; /* Nord5 */
             font-weight: 600;
             padding-bottom: 8px;
-            border-bottom: 2px solid #e1e8ed;
+            border-bottom: 2px solid #434c5e; /* Nord2 */
         }
 
         .response-content h3 {
             font-size: 22px;
             margin-top: 28px;
             margin-bottom: 14px;
-            color: #34495e;
+            color: #e5e9f0; /* Nord5 */
             font-weight: 600;
         }
 
@@ -169,7 +175,7 @@
             font-size: 18px;
             margin-top: 24px;
             margin-bottom: 12px;
-            color: #34495e;
+            color: #d8dee9; /* Nord4 */
             font-weight: 600;
         }
 
@@ -198,22 +204,23 @@
         }
 
         .response-content code {
-            background: #f6f8fa;
+            background: #434c5e; /* Nord2 */
             padding: 3px 8px;
             border-radius: 4px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 14px;
-            color: #e74c3c;
-            border: 1px solid #e1e8ed;
+            color: #88c0d0; /* Nord8 */
+            border: 1px solid #4c566a; /* Nord3 */
         }
 
         .response-content pre {
-            background: #282c34;
+            background: #2e3440; /* Nord0 */
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 24px 0;
             position: relative;
+            border: 1px solid #434c5e; /* Nord2 */
         }
 
         .response-content pre code {
@@ -224,7 +231,28 @@
             line-height: 1.6;
             border: none;
             display: block;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
         }
+        
+        /* Enhanced syntax highlighting for better visibility */
+        .hljs-keyword { color: #c678dd !important; font-weight: bold; }
+        .hljs-string { color: #98c379 !important; }
+        .hljs-number { color: #d19a66 !important; }
+        .hljs-literal { color: #56b6c2 !important; }
+        .hljs-comment { color: #5c6370 !important; font-style: italic; }
+        .hljs-function { color: #61afef !important; }
+        .hljs-class { color: #e5c07b !important; }
+        .hljs-title { color: #61afef !important; font-weight: bold; }
+        .hljs-params { color: #abb2bf !important; }
+        .hljs-meta { color: #56b6c2 !important; }
+        .hljs-attribute { color: #d19a66 !important; }
+        .hljs-tag { color: #e06c75 !important; }
+        .hljs-name { color: #e06c75 !important; }
+        .hljs-selector-class { color: #e5c07b !important; }
+        .hljs-selector-id { color: #61afef !important; }
+        .hljs-type { color: #e5c07b !important; }
+        .hljs-built_in { color: #e5c07b !important; }
+        .hljs-annotation { color: #e5c07b !important; }
 
         .response-content blockquote {
             border-left: 4px solid #6db33f;
@@ -262,17 +290,18 @@
         }
 
         .response-content a {
-            color: #6db33f;
+            color: #88c0d0; /* Nord8 */
             text-decoration: none;
             font-weight: 500;
         }
 
         .response-content a:hover {
             text-decoration: underline;
+            color: #81a1c1; /* Nord9 */
         }
 
         .response-content strong {
-            color: #2c3e50;
+            color: #eceff4; /* Nord6 */
             font-weight: 600;
         }
 
@@ -337,7 +366,7 @@
         .status {
             text-align: center;
             margin-top: 16px;
-            color: #6db33f;
+            color: #88c0d0; /* Nord8 */
             font-weight: 600;
             font-size: 14px;
         }
@@ -364,7 +393,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Spring Doc Chat</h1>
+    <h1>Chat</h1>
 
     <div class="input-group">
         <label for="messageInput">Your Question:</label>
@@ -474,8 +503,8 @@
                 // Directly add the chunk to accumulated text
                 accumulatedText += chunk;
 
-                // Show plain text during streaming with dark background
-                responseContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 0; line-height: 1.8; background: #282c34; color: #ffffff; padding: 20px; border-radius: 8px; font-size: 15px;">${escapeHtml(accumulatedText)}<span style="color: #6db33f; animation: blink 1s infinite; font-weight: bold;">▊</span></pre>`;
+                // Show plain text during streaming with Nord theme
+                responseContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 0; line-height: 1.8; background: #2e3440; color: #eceff4; padding: 20px; border-radius: 8px; font-size: 15px; border: 1px solid #434c5e;">${escapeHtml(accumulatedText)}<span style="color: #88c0d0; animation: blink 1s infinite; font-weight: bold;">▊</span></pre>`;
 
                 // Auto-scroll to bottom
                 responseContainer.scrollTop = responseContainer.scrollHeight;
@@ -501,8 +530,27 @@
             const html = marked.parse(text);
             responseContent.innerHTML = html;
 
-            // Add language badges to code blocks
+            // Fix standalone code elements that should be in pre blocks
+            responseContent.querySelectorAll('code[class*="language-"]').forEach((code) => {
+                if (code.parentElement.tagName !== 'PRE') {
+                    const pre = document.createElement('pre');
+                    code.parentNode.insertBefore(pre, code);
+                    pre.appendChild(code);
+                }
+            });
+            
+            // Apply syntax highlighting to all code blocks
             responseContent.querySelectorAll('pre code').forEach((block) => {
+                // Decode HTML entities first
+                block.innerHTML = block.innerHTML
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&amp;/g, '&');
+                
+                // Apply highlight.js
+                hljs.highlightElement(block);
+                
+                // Add language badge
                 const pre = block.parentElement;
                 const classes = block.className.split(' ');
                 const langClass = classes.find(c => c.startsWith('language-'));
