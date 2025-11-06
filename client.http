@@ -1,6 +1,7 @@
 POST http://localhost:8080/spring-doc
 Content-Type: application/json
+Accept: application/stream+json
 
 {
-  "message":"Explain dependency injection"
+  "message":"Prepare detailed tutorial how to use spring data"
 }

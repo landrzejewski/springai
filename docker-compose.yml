@@ -9,3 +9,7 @@ services:
       - "org.springframework.boot.service-connection=postgres"
     ports:
       - '5432:5432'
+    volumes:
+      - vector:/var/lib/postgresql/data
+volumes:
+  vector:

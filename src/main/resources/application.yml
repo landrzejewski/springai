@@ -3,20 +3,23 @@ spring:
     ollama:
       embedding:
         options:
-          model: embeddinggemma:300m
+          model: bge-m3:latest
       chat:
         options:
-          model: qwen3:8b
-
+          model: qwen3:1.7b
+          temperature: 0.8
+          numPredict: 16000
+          topP: 0.95
+          topK: 100
+          repeatPenalty: 0.9
+          numCtx: 32768
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1024
+        initialize-schema: true
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-doc
     username: admin
     password: admin
-  vectorstore:
-    pgvector:
-    index-type: HNSW
-    distance-type: COSINE_DISTANCE
-    dimension: 1536
-logging:
-  level:
-    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Doc Chat</title>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.0/marked.min.js"></script>
+
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .spring-icon {
+            color: #6db33f;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #6db33f;
+        }
+
+        button {
+            background: #6db33f;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover:not(:disabled) {
+            background: #5ca632;
+            transform: translateY(-1px);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .response-container {
+            margin-top: 30px;
+            padding: 0;
+            background: #ffffff;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            min-height: 200px;
+            max-height: 700px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .response-container.active {
+            display: block;
+        }
+
+        .response-content {
+            padding: 32px;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        /* Markdown Styles */
+        .response-content h1 {
+            font-size: 32px;
+            margin-top: 32px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #6db33f;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .response-content h1:first-child {
+            margin-top: 0;
+        }
+
+        .response-content h2 {
+            font-size: 26px;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #2c3e50;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+
+        .response-content h3 {
+            font-size: 22px;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .response-content h4 {
+            font-size: 18px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .response-content h5 {
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .response-content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .response-content ul,
+        .response-content ol {
+            margin-bottom: 16px;
+            padding-left: 32px;
+        }
+
+        .response-content li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .response-content code {
+            background: #f6f8fa;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: #e74c3c;
+            border: 1px solid #e1e8ed;
+        }
+
+        .response-content pre {
+            background: #282c34;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .response-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #abb2bf;
+            font-size: 14px;
+            line-height: 1.6;
+            border: none;
+            display: block;
+        }
+
+        .response-content blockquote {
+            border-left: 4px solid #6db33f;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+            background: #f9fafb;
+            padding: 16px 20px;
+            border-radius: 4px;
+        }
+
+        .response-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .response-content table th,
+        .response-content table td {
+            border: 1px solid #e1e8ed;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .response-content table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .response-content table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .response-content a {
+            color: #6db33f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .response-content a:hover {
+            text-decoration: underline;
+        }
+
+        .response-content strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .response-content hr {
+            border: none;
+            border-top: 2px solid #e1e8ed;
+            margin: 32px 0;
+        }
+
+        .response-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* Language badge for code blocks */
+        .code-lang {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #abb2bf;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(109, 179, 63, 0.3);
+            border-radius: 50%;
+            border-top-color: #6db33f;
+            animation: spin 0.8s ease-in-out infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            border-left: 4px solid #e74c3c;
+            padding: 16px;
+            border-radius: 4px;
+            color: #c0392b;
+            margin-top: 10px;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 16px;
+            color: #6db33f;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Scrollbar styling */
+        .response-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .response-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .response-container::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 5px;
+        }
+
+        .response-container::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><span class="spring-icon">🌱</span> Spring Doc Chat</h1>
+
+    <div class="input-group">
+        <label for="messageInput">Your Question:</label>
+        <textarea
+                id="messageInput"
+                placeholder="e.g., Prepare detailed tutorial how to use spring data"
+        >Prepare detailed tutorial how to use spring data</textarea>
+    </div>
+
+    <button id="sendBtn" onclick="sendMessage()">
+        Send Question
+    </button>
+
+    <div id="status" class="status"></div>
+
+    <div id="responseContainer" class="response-container">
+        <div id="responseContent" class="response-content"></div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8080/spring-doc';
+
+    // Configure Marked.js
+    marked.use({
+        breaks: false,
+        gfm: true,
+        headerIds: true,
+        mangle: false,
+        pedantic: false,
+        smartLists: true,
+        smartypants: false,
+        highlight: function(code, lang) {
+            const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+            return hljs.highlight(code, { language }).value;
+        },
+        langPrefix: 'hljs language-'
+    });
+
+    let accumulatedText = '';
+    let renderTimeout = null;
+
+    async function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const responseContainer = document.getElementById('responseContainer');
+        const responseContent = document.getElementById('responseContent');
+        const statusDiv = document.getElementById('status');
+
+        const message = messageInput.value.trim();
+
+        if (!message) {
+            alert('Please enter a message');
+            return;
+        }
+
+        // Reset UI
+        accumulatedText = '';
+        responseContent.innerHTML = '';
+        responseContainer.classList.add('active');
+        sendBtn.disabled = true;
+        statusDiv.innerHTML = 'Sending request<span class="spinner"></span>';
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'text/plain'
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            statusDiv.innerHTML = 'Streaming response<span class="spinner"></span>';
+
+            // Read the streaming response
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            while (true) {
+                const { value, done } = await reader.read();
+
+                if (done) {
+                    // Final render
+                    renderMarkdown(accumulatedText);
+                    statusDiv.textContent = '✅ Response complete';
+                    setTimeout(() => statusDiv.textContent = '', 3000);
+                    break;
+                }
+
+                // Decode the chunk
+                const chunk = decoder.decode(value, { stream: true });
+                
+                // Directly add the chunk to accumulated text
+                accumulatedText += chunk;
+
+                // Debounced rendering for better performance
+                if (renderTimeout) clearTimeout(renderTimeout);
+                renderTimeout = setTimeout(() => {
+                    renderMarkdown(accumulatedText);
+                }, 100);
+
+                // Auto-scroll to bottom
+                responseContainer.scrollTop = responseContainer.scrollHeight;
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            statusDiv.textContent = '';
+            responseContent.innerHTML = `<div class="error">
+                    <strong>Error:</strong> ${error.message}<br>
+                    Make sure the server is running on http://localhost:8080
+                </div>`;
+        } finally {
+            sendBtn.disabled = false;
+        }
+    }
+
+    function renderMarkdown(text) {
+        const responseContent = document.getElementById('responseContent');
+
+        try {
+            // Parse markdown to HTML using Marked.js
+            const html = marked.parse(text);
+            responseContent.innerHTML = html;
+
+            // Add language badges to code blocks
+            responseContent.querySelectorAll('pre code').forEach((block) => {
+                const pre = block.parentElement;
+                const classes = block.className.split(' ');
+                const langClass = classes.find(c => c.startsWith('language-'));
+                if (langClass) {
+                    const lang = langClass.replace('language-', '');
+                    const badge = document.createElement('span');
+                    badge.className = 'code-lang';
+                    badge.textContent = lang;
+                    pre.appendChild(badge);
+                }
+            });
+        } catch (error) {
+            console.error('Markdown rendering error:', error);
+            responseContent.textContent = text; // Fallback to plain text
+        }
+    }
+
+    // Allow Enter to send (Shift+Enter for new line)
+    document.getElementById('messageInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>
