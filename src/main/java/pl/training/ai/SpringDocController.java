@@ -1,32 +1,31 @@
-package pl.training.ai.rag;
+package pl.training.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.training.ai.chat.PromptRequest;
+import reactor.core.publisher.Flux;
 
 @RestController
-public class TrainingController {
+public class SpringDocController {
 
     private final ChatClient chatClient;
 
-    public TrainingController(OpenAiChatModel chatModel, VectorStore vectorStore) {
+    public SpringDocController(OllamaChatModel chatModel, PgVectorStore vectorStore) {
         this.chatClient = ChatClient.builder(chatModel)
                 .defaultAdvisors(new QuestionAnswerAdvisor(vectorStore))
                 .build();
     }
 
-    @PostMapping("trainings")
-    public TrainingList trainings(@RequestBody PromptRequest promptRequest) {
+    @PostMapping("spring-doc")
+    public Flux<String> trainings(@RequestBody PromptRequest promptRequest) {
         return chatClient
-                .prompt()
-                .user(promptRequest.message())
-                .call()
-                .entity(TrainingList.class);
+                .prompt(promptRequest.message())
+                .stream()
+                .content();
     }
 
 }

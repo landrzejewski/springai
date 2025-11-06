@@ -1,23 +1,13 @@
 spring:
   ai:
-    openai:
-      api-key: ${API_KEY}
-      chat:
-        options:
-          model: gpt-4.1
     ollama:
+      embedding:
+        options:
+          model: embeddinggemma:300m
       chat:
         options:
-          model: qwen3:0.6b
-    #          temperature: 1
-    #          max-tokens: 10
-    #          frequency-penalty: 1.0
-    mcp:
-      client:
-        toolcallback:
-          enabled: true
-        stdio:
-          servers-configuration: classpath:mcp-servers-config.json
+          model: qwen3:8b
+
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-doc
     username: admin
@@ -30,5 +20,3 @@ spring:
 logging:
   level:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
-server:
-  port: 8000
