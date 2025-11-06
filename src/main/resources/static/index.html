@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.0/marked.min.js"></script>
 
     <!-- Highlight.js for code syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/nord.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
@@ -30,32 +30,32 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
-            background: #2e3440; /* Nord0 */
+            background: #f8f9fa; /* Light gray background */
             min-height: 100vh;
             padding: 40px 20px;
         }
 
         .container {
-            background: #3b4252; /* Nord1 */
+            background: #ffffff; /* Pure white */
             border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
             padding: 40px;
-            border: 1px solid #434c5e; /* Nord2 */
+            border: 1px solid #e0e0e0; /* Light border */
         }
 
         h1 {
-            color: #eceff4; /* Nord6 */
+            color: #1a1a1a; /* Near black */
             margin-bottom: 30px;
             text-align: center;
             font-size: 32px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .spring-icon {
-            color: #88c0d0; /* Nord8 - frost blue */
+            color: #0066cc; /* Bright blue */
         }
 
         .input-group {
@@ -65,7 +65,7 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #d8dee9; /* Nord4 */
+            color: #333333; /* Dark gray */
             font-weight: 600;
             font-size: 14px;
         }
@@ -73,9 +73,9 @@
         textarea {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #434c5e; /* Nord2 */
-            background: #2e3440; /* Nord0 */
-            color: #eceff4; /* Nord6 */
+            border: 2px solid #cccccc; /* Gray border */
+            background: #ffffff; /* White background */
+            color: #000000; /* Black text */
             border-radius: 8px;
             font-size: 15px;
             font-family: inherit;
@@ -86,12 +86,12 @@
 
         textarea:focus {
             outline: none;
-            border-color: #88c0d0; /* Nord8 */
+            border-color: #0066cc; /* Bright blue */
         }
 
         button {
-            background: #88c0d0; /* Nord8 */
-            color: #2e3440; /* Nord0 */
+            background: #0066cc; /* Bright blue */
+            color: #ffffff; /* White text */
             border: none;
             padding: 12px 28px;
             border-radius: 8px;
@@ -103,7 +103,7 @@
         }
 
         button:hover:not(:disabled) {
-            background: #81a1c1; /* Nord9 */
+            background: #0052a3; /* Darker blue */
             transform: translateY(-1px);
         }
 
@@ -119,8 +119,8 @@
         .response-container {
             margin-top: 30px;
             padding: 0;
-            background: #2e3440; /* Nord0 */
-            border: 1px solid #434c5e; /* Nord2 */
+            background: #ffffff; /* White background */
+            border: 1px solid #dddddd; /* Light gray border */
             border-radius: 8px;
             min-height: 200px;
             max-height: 700px;
@@ -134,7 +134,7 @@
 
         .response-content {
             padding: 32px;
-            color: #eceff4; /* Nord6 */
+            color: #000000; /* Black text */
             line-height: 1.8;
         }
         
@@ -149,8 +149,8 @@
             margin-top: 32px;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 3px solid #88c0d0; /* Nord8 */
-            color: #eceff4; /* Nord6 */
+            border-bottom: 3px solid #0066cc; /* Bright blue */
+            color: #000000; /* Black */
             font-weight: 700;
         }
 
@@ -162,17 +162,17 @@
             font-size: 26px;
             margin-top: 32px;
             margin-bottom: 16px;
-            color: #e5e9f0; /* Nord5 */
+            color: #1a1a1a; /* Near black */
             font-weight: 600;
             padding-bottom: 8px;
-            border-bottom: 2px solid #434c5e; /* Nord2 */
+            border-bottom: 2px solid #dddddd; /* Light gray */
         }
 
         .response-content h3 {
             font-size: 22px;
             margin-top: 28px;
             margin-bottom: 14px;
-            color: #e5e9f0; /* Nord5 */
+            color: #1a1a1a; /* Near black */
             font-weight: 600;
         }
 
@@ -180,7 +180,7 @@
             font-size: 18px;
             margin-top: 24px;
             margin-bottom: 12px;
-            color: #d8dee9; /* Nord4 */
+            color: #333333; /* Dark gray */
             font-weight: 600;
         }
 
@@ -188,54 +188,54 @@
             font-size: 16px;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #34495e;
+            color: #444444; /* Medium gray */
             font-weight: 600;
         }
 
         .response-content p {
             margin-bottom: 16px;
             line-height: 1.8;
-            color: #eceff4; /* Ensure text is visible */
+            color: #000000; /* Black text */
         }
 
         .response-content ul,
         .response-content ol {
             margin-bottom: 16px;
             padding-left: 32px;
-            color: #eceff4; /* Nord6 */
+            color: #000000; /* Black text */
         }
 
         .response-content li {
             margin-bottom: 10px;
             line-height: 1.7;
-            color: #eceff4; /* Nord6 */
+            color: #000000; /* Black text */
         }
 
         .response-content code {
-            background: #3b4252; /* Darker background for better contrast */
+            background: #f5f5f5; /* Light gray background */
             padding: 4px 8px;
             border-radius: 4px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 14px;
-            color: #88c0d0; /* Nord8 - bright cyan */
-            border: 1px solid #4c566a; /* Nord3 */
+            color: #d73a49; /* Red for inline code */
+            border: 1px solid #e1e4e8; /* Light border */
             font-weight: 500;
         }
 
         .response-content pre {
-            background: #2e3440; /* Nord0 */
+            background: #f6f8fa; /* Light gray background */
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 24px 0;
             position: relative;
-            border: 1px solid #434c5e; /* Nord2 */
+            border: 1px solid #d1d5da; /* Light border */
         }
 
         .response-content pre code {
             background: transparent;
             padding: 0;
-            color: #d8dee9;  /* Brighter default text color */
+            color: #24292e;  /* Dark gray for code */
             font-size: 14px;
             line-height: 1.8;  /* Better line spacing */
             border: none;
@@ -243,36 +243,100 @@
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
         }
         
-        /* Enhanced syntax highlighting with better contrast */
-        .hljs-keyword { color: #d08770 !important; font-weight: bold; }  /* Bright orange for keywords */
-        .hljs-string { color: #a3be8c !important; }  /* Green for strings */
-        .hljs-number { color: #b48ead !important; }  /* Purple for numbers */
-        .hljs-literal { color: #88c0d0 !important; }  /* Cyan for literals */
-        .hljs-comment { color: #616e88 !important; font-style: italic; }  /* Muted gray for comments */
-        .hljs-function { color: #88c0d0 !important; font-weight: 600; }  /* Bright cyan for functions */
-        .hljs-class { color: #ebcb8b !important; font-weight: 600; }  /* Yellow for classes */
-        .hljs-title { color: #8fbcbb !important; font-weight: bold; }  /* Teal for titles */
-        .hljs-params { color: #d8dee9 !important; }  /* Light gray for params */
-        .hljs-meta { color: #b48ead !important; }  /* Purple for meta */
-        .hljs-attribute { color: #d08770 !important; }  /* Orange for attributes */
-        .hljs-tag { color: #bf616a !important; }  /* Red for tags */
-        .hljs-name { color: #bf616a !important; }  /* Red for names */
-        .hljs-selector-class { color: #ebcb8b !important; }  /* Yellow for selectors */
-        .hljs-selector-id { color: #8fbcbb !important; }  /* Teal for IDs */
-        .hljs-type { color: #ebcb8b !important; }  /* Yellow for types */
-        .hljs-built_in { color: #81a1c1 !important; font-weight: 600; }  /* Light blue for built-ins */
-        .hljs-annotation { color: #ebcb8b !important; }  /* Yellow for annotations */
-        .hljs-variable { color: #88c0d0 !important; }  /* Cyan for variables */
-        .hljs-regexp { color: #bf616a !important; }  /* Red for regex */
-        .hljs-symbol { color: #b48ead !important; }  /* Purple for symbols */
+        /* Enhanced GitHub theme with higher contrast */
+        .hljs {
+            background: #f8f8f8 !important;
+            color: #000000 !important;
+        }
+        
+        /* Keywords - darker red */
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-literal,
+        .hljs-section,
+        .hljs-link {
+            color: #d73a49 !important;
+            font-weight: bold !important;
+        }
+        
+        /* Strings - darker green */
+        .hljs-string,
+        .hljs-meta .hljs-string,
+        .hljs-regexp,
+        .hljs-template-variable {
+            color: #22863a !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Comments - medium gray */
+        .hljs-comment,
+        .hljs-quote {
+            color: #586069 !important;
+            font-style: italic !important;
+        }
+        
+        /* Functions and methods - darker blue */
+        .hljs-title,
+        .hljs-name,
+        .hljs-selector-id,
+        .hljs-selector-class {
+            color: #005cc5 !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Numbers and built-ins - purple */
+        .hljs-number,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-literal,
+        .hljs-type {
+            color: #6f42c1 !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Attributes and variables - orange */
+        .hljs-attr,
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-class .hljs-title,
+        .hljs-attribute {
+            color: #e36209 !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Meta and annotations - brown */
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-subst,
+        .hljs-meta,
+        .hljs-meta .hljs-keyword,
+        .hljs-link {
+            color: #735c0f !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Tags in XML/HTML - darker teal */
+        .hljs-tag {
+            color: #22863a !important;
+        }
+        
+        /* Important elements - bold */
+        .hljs-strong {
+            font-weight: bold !important;
+        }
+        
+        /* Emphasis */
+        .hljs-emphasis {
+            font-style: italic !important;
+        }
 
         .response-content blockquote {
-            border-left: 4px solid #88c0d0; /* Nord8 */
+            border-left: 4px solid #0066cc; /* Bright blue */
             padding-left: 20px;
             margin: 20px 0;
-            color: #d8dee9; /* Nord4 */
+            color: #555555; /* Medium gray */
             font-style: italic;
-            background: #3b4252; /* Nord1 */
+            background: #f7f9fb; /* Very light blue-gray */
             padding: 16px 20px;
             border-radius: 4px;
         }
@@ -286,41 +350,41 @@
 
         .response-content table th,
         .response-content table td {
-            border: 1px solid #434c5e; /* Nord2 */
+            border: 1px solid #d1d5da; /* Light gray */
             padding: 12px 16px;
             text-align: left;
-            color: #eceff4; /* Nord6 */
+            color: #24292e; /* Dark gray */
         }
 
         .response-content table th {
-            background: #3b4252; /* Nord1 */
+            background: #f3f4f6; /* Light gray */
             font-weight: 600;
-            color: #eceff4; /* Nord6 */
+            color: #000000; /* Black */
         }
 
         .response-content table tr:nth-child(even) {
-            background: #434c5e; /* Nord2 */
+            background: #f9fafb; /* Very light gray */
         }
 
         .response-content a {
-            color: #88c0d0; /* Nord8 */
+            color: #0066cc; /* Bright blue */
             text-decoration: none;
             font-weight: 500;
         }
 
         .response-content a:hover {
             text-decoration: underline;
-            color: #81a1c1; /* Nord9 */
+            color: #0052a3; /* Darker blue */
         }
 
         .response-content strong {
-            color: #eceff4; /* Nord6 */
-            font-weight: 600;
+            color: #000000; /* Black */
+            font-weight: 700;
         }
 
         .response-content hr {
             border: none;
-            border-top: 2px solid #434c5e; /* Nord2 */
+            border-top: 2px solid #e1e4e8; /* Light gray */
             margin: 32px 0;
         }
 
@@ -335,24 +399,24 @@
             position: absolute;
             top: 10px;
             right: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #abb2bf;
+            background: rgba(0, 0, 0, 0.05);
+            color: #586069;
             padding: 4px 10px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(63, 109, 179, 0.3);
+            border: 2px solid rgba(0, 102, 204, 0.2);
             border-radius: 50%;
-            border-top-color: #a1adc0;
+            border-top-color: #0066cc;
             animation: spin 0.8s ease-in-out infinite;
             margin-left: 8px;
             vertical-align: middle;
@@ -369,17 +433,18 @@
 
         .error {
             background: #fee;
-            border-left: 4px solid #e74c3c;
+            border-left: 4px solid #d73a49;
             padding: 16px;
             border-radius: 4px;
-            color: #c0392b;
+            color: #d73a49;
             margin-top: 10px;
+            font-weight: 500;
         }
 
         .status {
             text-align: center;
             margin-top: 16px;
-            color: #88c0d0; /* Nord8 */
+            color: #0066cc; /* Bright blue */
             font-weight: 600;
             font-size: 14px;
         }
@@ -390,17 +455,17 @@
         }
 
         .response-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #f6f8fa;
             border-radius: 0 8px 8px 0;
         }
 
         .response-container::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
+            background: #c1c8cd;
             border-radius: 5px;
         }
 
         .response-container::-webkit-scrollbar-thumb:hover {
-            background: #a0aec0;
+            background: #959da5;
         }
     </style>
 </head>
@@ -441,7 +506,9 @@
         smartypants: false,
         highlight: function(code, lang) {
             const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-            return hljs.highlight(code, { language }).value;
+            // Let highlight.js handle the escaping
+            const highlighted = hljs.highlight(code, { language }).value;
+            return highlighted;
         },
         langPrefix: 'hljs language-'
     });
@@ -505,7 +572,7 @@
                 if (done) {
                     // Final render
                     renderMarkdown(accumulatedText);
-                    statusDiv.textContent = '✅ Response complete';
+                    statusDiv.textContent = '✓ Response complete';
                     setTimeout(() => statusDiv.textContent = '', 3000);
                     break;
                 }
@@ -516,8 +583,8 @@
                 // Directly add the chunk to accumulated text
                 accumulatedText += chunk;
 
-                // Show plain text during streaming with Nord theme
-                responseContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 0; line-height: 1.8; background: #2e3440; color: #eceff4; padding: 20px; border-radius: 8px; font-size: 15px; border: 1px solid #434c5e;">${escapeHtml(accumulatedText)}<span style="color: #88c0d0; animation: blink 1s infinite; font-weight: bold;">▊</span></pre>`;
+                // Show plain text during streaming with light theme
+                responseContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 0; line-height: 1.8; background: #f6f8fa; color: #24292e; padding: 20px; border-radius: 8px; font-size: 15px; border: 1px solid #d1d5da;">${escapeHtml(accumulatedText)}<span style="color: #0066cc; animation: blink 1s infinite; font-weight: bold;">▊</span></pre>`;
 
                 // Auto-scroll to bottom
                 responseContainer.scrollTop = responseContainer.scrollHeight;
@@ -554,14 +621,26 @@
             
             // Apply syntax highlighting to all code blocks
             responseContent.querySelectorAll('pre code').forEach((block) => {
-                // Decode HTML entities first
-                block.innerHTML = block.innerHTML
-                    .replace(/&lt;/g, '<')
-                    .replace(/&gt;/g, '>')
-                    .replace(/&amp;/g, '&');
+                // Store the original text content before highlighting
+                const originalText = block.textContent;
                 
-                // Apply highlight.js
-                hljs.highlightElement(block);
+                // Check if this might be XML/HTML content
+                if (block.classList.contains('language-xml') || 
+                    block.classList.contains('language-html') ||
+                    originalText.includes('<') && originalText.includes('>')) {
+                    
+                    // Manually highlight to preserve XML tags
+                    const language = Array.from(block.classList)
+                        .find(c => c.startsWith('language-'))
+                        ?.replace('language-', '') || 'xml';
+                    
+                    // Re-highlight with the original text
+                    const highlighted = hljs.highlight(originalText, { language }).value;
+                    block.innerHTML = highlighted;
+                } else {
+                    // For non-XML content, use standard highlighting
+                    hljs.highlightElement(block);
+                }
                 
                 // Add language badge
                 const pre = block.parentElement;
