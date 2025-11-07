@@ -6,13 +6,14 @@ spring:
           model: bge-m3:latest
       chat:
         options:
-          model: qwen3:1.7b # gpt-oss:120b
+          model: qwen3-coder:30b # qwen3:1.7b # gpt-oss:120b
           temperature: 0.8
           numPredict: 16000
           topP: 0.95
           topK: 100
           repeatPenalty: 0.9
           numCtx: 32768
+      # base-url: https://ollama.com/api/chat
     vectorstore:
       pgvector:
         index-type: HNSW

@@ -30,7 +30,7 @@ public class SpringDocController {
         this.promptTemplate = new PromptTemplate(promptResource);
     }
 
-    @PostMapping(value = "spring-doc", produces = "text/plain")
+    @PostMapping(value = "spring-doc")
     public Flux<String> trainings(@RequestBody PromptRequest promptRequest) {
         Map<String, Object> parameters = Map.of("userQuestion", promptRequest.message());
         var enhancedPrompt = promptTemplate.create(parameters)
