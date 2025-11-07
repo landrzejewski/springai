@@ -30,7 +30,7 @@ public class SpringDocController {
         this.promptTemplate = new PromptTemplate(promptResource);
     }
 
-    @PostMapping(value = "spring-doc")
+    @PostMapping(value = "spring-doc-text")
     public Flux<String> trainings(@RequestBody PromptRequest promptRequest) {
         Map<String, Object> parameters = Map.of("userQuestion", promptRequest.message());
         var enhancedPrompt = promptTemplate.create(parameters)
@@ -38,6 +38,17 @@ public class SpringDocController {
         return chatClient
                 .prompt(enhancedPrompt)
                 .stream()
+                .content();
+    }
+
+    @PostMapping(value = "spring-doc")
+    public String trainingsAsText(@RequestBody PromptRequest promptRequest) {
+        Map<String, Object> parameters = Map.of("userQuestion", promptRequest.message());
+        var enhancedPrompt = promptTemplate.create(parameters)
+                .getContents();
+        return chatClient
+                .prompt(enhancedPrompt)
+                .call()
                 .content();
     }
 
