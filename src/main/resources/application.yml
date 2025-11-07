@@ -6,13 +6,13 @@ spring:
           model: bge-m3:latest
       chat:
         options:
-          model: qwen3:8b # gpt-oss:120b
-          temperature: 0.8
-          numPredict: 16000
-          topP: 0.95
-          topK: 100
-          repeatPenalty: 0.9
-          numCtx: 32768
+          model: qwen3:32b # gpt-oss:120b
+#          temperature: 0.8
+#          numPredict: 16000
+#          topP: 0.95
+#          topK: 100
+#          repeatPenalty: 0.9
+#          numCtx: 32768
     vectorstore:
       pgvector:
         index-type: HNSW
