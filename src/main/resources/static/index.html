@@ -125,11 +125,73 @@
             min-height: 200px;
             max-height: 700px;
             overflow-y: auto;
+            overflow-x: hidden;
             display: none;
+            position: relative;
         }
 
         .response-container.active {
             display: block;
+        }
+
+        .response-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 16px;
+            background: #f6f8fa;
+            border-bottom: 1px solid #d1d5da;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #0066cc; /* Same as Send button */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #0052a3; /* Same as Send button hover */
+            transform: translateY(-1px);
+        }
+
+        .action-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .action-btn:disabled {
+            background: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .action-btn:disabled:hover {
+            background: #cccccc;
+            transform: none;
+        }
+
+        .action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .action-btn.success {
+            background: #22863a; /* Green for success */
+            color: #ffffff;
         }
 
         .response-content {
@@ -488,6 +550,22 @@
     <div id="status" class="status"></div>
 
     <div id="responseContainer" class="response-container">
+        <div class="response-header">
+            <button id="copyBtn" class="action-btn" onclick="copyResponse()" title="Copy to clipboard" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                </svg>
+                Copy as Markdown
+            </button>
+            <button id="saveBtn" class="action-btn" onclick="saveAsHtml()" title="Save as HTML" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                </svg>
+                Save as HTML
+            </button>
+        </div>
         <div id="responseContent" class="response-content"></div>
     </div>
 </div>
@@ -543,6 +621,10 @@
         responseContainer.classList.add('active');
         sendBtn.disabled = true;
         statusDiv.innerHTML = 'Sending request<span class="spinner"></span>';
+        
+        // Disable action buttons during streaming
+        document.getElementById('copyBtn').disabled = true;
+        document.getElementById('saveBtn').disabled = true;
 
         try {
             const response = await fetch(API_URL, {
@@ -574,6 +656,10 @@
                     renderMarkdown(accumulatedText);
                     statusDiv.textContent = '✓ Response complete';
                     setTimeout(() => statusDiv.textContent = '', 3000);
+                    
+                    // Enable action buttons when streaming is complete
+                    document.getElementById('copyBtn').disabled = false;
+                    document.getElementById('saveBtn').disabled = false;
                     break;
                 }
 
@@ -597,6 +683,9 @@
                     <strong>Error:</strong> ${error.message}<br>
                     Make sure the server is running on http://localhost:8080
                 </div>`;
+            // Keep buttons disabled on error
+            document.getElementById('copyBtn').disabled = true;
+            document.getElementById('saveBtn').disabled = true;
         } finally {
             sendBtn.disabled = false;
         }
@@ -671,6 +760,168 @@
             sendMessage();
         }
     });
+
+    // Copy response to clipboard
+    async function copyResponse() {
+        const responseContent = document.getElementById('responseContent');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        try {
+            // Get the text content
+            const textContent = accumulatedText || responseContent.innerText;
+            
+            // Copy to clipboard
+            await navigator.clipboard.writeText(textContent);
+            
+            // Show success feedback
+            copyBtn.classList.add('success');
+            copyBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                Copied!
+            `;
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                copyBtn.classList.remove('success');
+                copyBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                    Copy
+                `;
+            }, 2000);
+            
+        } catch (err) {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard');
+        }
+    }
+
+    // Save response as HTML file
+    function saveAsHtml() {
+        const responseContent = document.getElementById('responseContent');
+        const saveBtn = document.getElementById('saveBtn');
+        
+        try {
+            // Create a complete HTML document
+            const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Documentation Response</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
+            line-height: 1.8;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #ffffff;
+            color: #000000;
+        }
+        h1 { color: #000000; border-bottom: 3px solid #0066cc; padding-bottom: 12px; }
+        h2 { color: #1a1a1a; border-bottom: 2px solid #dddddd; padding-bottom: 8px; }
+        h3, h4, h5 { color: #1a1a1a; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code {
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #d73a49;
+            border: 1px solid #e1e4e8;
+        }
+        pre {
+            background: #f6f8fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #d1d5da;
+        }
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #24292e;
+            border: none;
+        }
+        blockquote {
+            border-left: 4px solid #0066cc;
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: #f7f9fb;
+            color: #555555;
+            font-style: italic;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #d1d5da;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        th {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        ${document.querySelector('style').textContent.match(/\/\* Enhanced GitHub theme[\s\S]*?\.hljs-emphasis[^}]*}/)?.[0] || ''}
+    </style>
+</head>
+<body>
+    ${responseContent.innerHTML}
+</body>
+</html>`;
+            
+            // Create a blob and download link
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `spring-doc-response-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.html`;
+            
+            // Trigger download
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Show success feedback
+            saveBtn.classList.add('success');
+            saveBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                Saved!
+            `;
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                saveBtn.classList.remove('success');
+                saveBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                    Save as HTML
+                `;
+            }, 2000);
+            
+        } catch (err) {
+            console.error('Failed to save:', err);
+            alert('Failed to save as HTML');
+        }
+    }
 </script>
 </body>
 </html>
