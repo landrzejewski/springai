@@ -1,0 +1,6 @@
+- Zainstalować Ollama
+- Pobrać model:
+  - ollama pull bge-m3:latest
+  - ollama pull qwen3:1.7b 
+- Uruchomić bazę bazę:
+  - docker compose up
