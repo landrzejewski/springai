@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mcp-server": {
+      "command": "/home/student/.sdkman/candidates/java/25.0.4-oracle/bin/java",
+      "args": [
+        "-jar",
+        "./mcp-server/target/mcp-server.jar"
+      ],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: mcp-server
+  main:
+    banner-mode: off
+    web-application-type: none
+  ai:
+    mcp:
+      server:
+        name: time-server
+        version: 1.0.0
+        type: sync
+        stdio: true
+logging:
+  threshold:
+    console: OFF
+  file:
+    name: ./mcp.logs

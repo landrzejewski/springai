@@ -1,0 +1,44 @@
+spring:
+  ai:
+    openai:
+      base-url: https://ai.klasawchmurze.pl
+      api-key: ${LLM_API_KEY}
+      chat:
+        model: qwen3.8-27b
+        reasoning-effort: none
+        max-tokens: 4096
+        temperature: 0.2
+
+#      api-key: ${OPENAI_KEY}
+#      chat:
+#        model: gpt-4.1
+#        max-tokens: 4096
+#        temperature: 0.1
+    ollama:
+      chat:
+        model: qwen3.5:0.8b
+      init:
+        pull-model-strategy: when_missing
+        max-retries: 3
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
+        streamable-http:
+          connections:
+            mcp-search:
+              url: https://mcp-search.klasawchmurze.pl
+              endpoint: /mcp
+  datasource:
+    url: jdbc:postgresql://localhost:5432/training
+    username: admin
+    password: admin
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: DEBUG
+    io.modelcontextprotocol: DEBUG
