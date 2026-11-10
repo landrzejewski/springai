@@ -8,6 +8,8 @@ spring:
         reasoning-effort: none
         max-tokens: 4096
         temperature: 0.2
+      embedding:
+        model: embed-bge-m3
 
 #      api-key: ${OPENAI_KEY}
 #      chat:
@@ -17,6 +19,8 @@ spring:
     ollama:
       chat:
         model: qwen3.5:0.8b
+      embedding:
+        model: bge-m3
       init:
         pull-model-strategy: when_missing
         max-retries: 3
@@ -31,9 +35,21 @@ spring:
           servers-configuration: classpath:mcp-servers.json
         streamable-http:
           connections:
+#            mcp-server:
+#              url: http://localhost:8090
+#              endpoint: /mcp
             mcp-search:
               url: https://mcp-search.klasawchmurze.pl
               endpoint: /mcp
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        #index-type: hnsw
+        #distance-type: cosine_distance
+        # dimensions: ${LLM_EMBED_DIM:768}
+          # nomic-embed-text  -> 768
+          # bge-m3            -> 1024
+          # text-embedding-3-small (OpenAI) -> 1536
   datasource:
     url: jdbc:postgresql://localhost:5432/training
     username: admin

@@ -226,3 +226,27 @@ Content-Type: application/json
 {
   "userPromptText": "How many days are left until 2026-12-24?"
 }
+
+###
+
+POST http://localhost:8080/basic-rag-query?storeType=pg
+Content-Type: application/json
+
+{
+  "userPromptText": "What books about microservices do you recommend? Return title and author"
+}
+
+###
+
+POST http://localhost:8080/init-pgvector
+
+
+
+
+
+
+
+
+
+
+
