@@ -10,8 +10,10 @@ import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryReposito
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.mcp.customizer.McpClientCustomizer;
+import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.openai.OpenAiModerationModel;
 import org.springframework.ai.reader.JsonReader;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
@@ -20,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
+import pl.training.springai.moderation.ModerationModel;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -116,6 +119,11 @@ public class AppConfig {
                     return new Document(doc.getId(), content, metadata);
                 })
                 .toList();
+    }
+
+    @Bean
+    public ModerationModel moderationModel(OllamaChatModel chatModel) {
+        return new ModerationModel(chatModel, "speakleash/bielik-11b-v2.3-instruct:Q4_K_M");
     }
 
 }

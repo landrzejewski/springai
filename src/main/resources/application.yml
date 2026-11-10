@@ -24,6 +24,9 @@ spring:
       init:
         pull-model-strategy: when_missing
         max-retries: 3
+        chat:
+          additional-models:
+            - speakleash/bielik-11b-v2.3-instruct:Q4_K_M
     chat:
       memory:
         repository:
@@ -31,8 +34,8 @@ spring:
             initialize-schema: always
     mcp:
       client:
-        stdio:
-          servers-configuration: classpath:mcp-servers.json
+#        stdio:
+#          servers-configuration: classpath:mcp-servers.json
         streamable-http:
           connections:
 #            mcp-server:
