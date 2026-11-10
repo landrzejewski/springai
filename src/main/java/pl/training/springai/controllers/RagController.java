@@ -4,25 +4,33 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.document.MetadataMode;
+import org.springframework.ai.model.transformer.KeywordMetadataEnricher;
+import org.springframework.ai.model.transformer.SummaryMetadataEnricher;
 import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.rag.preretrieval.query.expansion.MultiQueryExpander;
 import org.springframework.ai.rag.preretrieval.query.transformation.RewriteQueryTransformer;
 import org.springframework.ai.rag.preretrieval.query.transformation.TranslationQueryTransformer;
 import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
+import org.springframework.ai.reader.TextReader;
+import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
+import org.springframework.ai.reader.markdown.config.MarkdownDocumentReaderConfig;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.FilterExpressionTextParser;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.ai.writer.FileDocumentWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.*;
 import pl.training.springai.AppConfig;
 import pl.training.springai.model.PromptRequest;
 import reactor.core.publisher.Flux;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -155,8 +163,7 @@ public class RagController {
               %s
                """.formatted(context);
 
-        return ChatClient.builder(chatModel).build()
-                .prompt()
+        return chatClient.prompt()
                 .user(promptRequest.userPromptText())
                 .system(systemMessage)
                 .stream()
@@ -194,5 +201,120 @@ public class RagController {
         documents.forEach(System.out::println);
     }
 
+    @Value("classpath:docs/spring-ai-overview.md")
+    private Resource markdownDocument;
+
+    @Value("classpath:docs/rag-notes.txt")
+    private Resource textDocument;
+
+    /**
+     * Extract only. MarkdownDocumentReader can split on horizontal rules, keep the heading
+     * hierarchy as metadata, and include or drop code blocks - so the structure of the source
+     * survives into the Documents instead of being flattened into one blob.
+     */
+    @GetMapping("read-markdown")
+    public List<Map<String, Object>> readMarkdown() {
+        var config = MarkdownDocumentReaderConfig.builder()
+                .withHorizontalRuleCreateDocument(true)
+                .withIncludeCodeBlock(false)
+                .withIncludeBlockquote(false)
+                .withAdditionalMetadata("source", "spring-ai-overview.md")
+                .build();
+        var reader = new MarkdownDocumentReader(markdownDocument, config);
+        return describe(reader.get());
+    }
+
+    @GetMapping("split")
+    public List<Map<String, Object>> split(@RequestParam(defaultValue = "200") int chunkSize) {
+        var documents = new TextReader(textDocument).get();
+        var splitter = TokenTextSplitter.builder()
+                .withChunkSize(chunkSize)
+                // chunks shorter than this are dropped rather than embedded as noise
+                .withMinChunkLengthToEmbed(20)
+                .withKeepSeparator(false)
+                .build();
+        return describe(splitter.apply(documents));
+    }
+
+    /**
+     * Transform with an LLM in the loop. Both enrichers call a ChatModel once per document and
+     * write the result into the metadata map - not into the text, so the extra information does
+     * not distort the embedding.
+     * <p>
+     * KeywordMetadataEnricher adds an "excerpt_keywords" entry; SummaryMetadataEnricher adds
+     * "section_summary" and, for PREVIOUS/NEXT, summaries of the neighbouring chunks, which helps
+     * a retrieved chunk carry some of its surrounding context.
+     * <p>
+     * This is expensive - one model call per document per enricher - so it belongs in an offline
+     * indexing job, not in the request path.
+     */
+    @GetMapping("enrich")
+    public List<Map<String, Object>> enrich() {
+        var documents = new TextReader(textDocument).get();
+        var chunks = TokenTextSplitter.builder().withChunkSize(200).build().apply(documents);
+
+        var keywordEnricher = KeywordMetadataEnricher.builder(chatModel)
+                .keywordCount(5)
+                .build();
+        var summaryEnricher = new SummaryMetadataEnricher(chatModel,
+                List.of(SummaryMetadataEnricher.SummaryType.CURRENT),
+                SummaryMetadataEnricher.DEFAULT_SUMMARY_EXTRACT_TEMPLATE,
+                MetadataMode.ALL);
+
+        return describe(summaryEnricher.apply(keywordEnricher.apply(chunks)));
+    }
+
+    /**
+     * The complete pipeline, all three stages chained. The VectorStore is the DocumentWriter:
+     * accept() embeds every chunk and stores the vector with its text and metadata.
+     */
+    @PostMapping("ingest")
+    public Map<String, Object> ingest(@RequestParam(defaultValue = "300") int chunkSize) {
+        var config = MarkdownDocumentReaderConfig.builder()
+                .withAdditionalMetadata("source", "spring-ai-overview.md")
+                .build();
+
+        var extracted = new MarkdownDocumentReader(markdownDocument, config).get();
+        var transformed = TokenTextSplitter.builder()
+                .withChunkSize(chunkSize)
+                .build()
+                .apply(extracted);
+        pgVectorStore.accept(transformed);
+
+        return Map.of("documentsRead", extracted.size(), "chunksStored", transformed.size());
+    }
+
+    /**
+     * The same pipeline with a different sink. FileDocumentWriter is useful to inspect exactly
+     * what would have been embedded before paying for the embeddings.
+     */
+    @PostMapping("dump")
+    public Map<String, Object> dump(@RequestParam(defaultValue = "target/etl-dump.txt") String fileName) {
+        var chunks = TokenTextSplitter.builder()
+                .withChunkSize(300)
+                .build()
+                .apply(new TextReader(textDocument).get());
+        // withDocumentMarkers writes an index line before each document, metadataMode selects
+        // which metadata ends up in the file
+        new FileDocumentWriter(fileName, true, MetadataMode.ALL, false).accept(chunks);
+        return Map.of("file", fileName, "chunks", chunks.size());
+    }
+
+    private List<Map<String, Object>> describe(List<Document> documents) {
+        return documents.stream()
+                .map(document -> Map.<String, Object>of(
+                        "id", document.getId(),
+                        "length", document.getText() == null ? 0 : document.getText().length(),
+                        "text", abbreviate(document.getText()),
+                        "metadata", document.getMetadata()))
+                .toList();
+    }
+
+    private String abbreviate(String text) {
+        if (text == null) {
+            return "";
+        }
+        return text.length() <= 180 ? text : text.substring(0, 180) + "...";
+    }
 
 }

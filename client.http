@@ -276,6 +276,27 @@ Content-Type: application/json
   "userPromptText": "Compare those books"
 }
 
+###
+
+GET http://localhost:8080/read-markdown
+
+###
+
+GET http://localhost:8080/split?chunkSize=40
+
+###
+
+GET http://localhost:8080/enrich
+
+###
+
+POST http://localhost:8080/dump?fileName=target/etl-dump.txt
+
+###
+
+POST http://localhost:8080/ingest?chunkSize=100
+
+
 
 
 
