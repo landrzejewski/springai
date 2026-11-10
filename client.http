@@ -240,11 +240,41 @@ Content-Type: application/json
 
 POST http://localhost:8080/init-pgvector
 
+###
 
+POST http://localhost:8080/rag-debug
+Content-Type: application/json
 
+{
+  "userPromptText": "What books about microservices do you recommend? Return title and author"
+}
 
+###
 
+POST http://localhost:8080/rag-query-expander?storeType=pg
+Content-Type: application/json
 
+{
+  "userPromptText": "What books about microservices do you recommend? Return title and author"
+}
+
+###
+
+POST http://localhost:8080/rag-rewrite-query?storeType=pgvector
+Content-Type: application/json
+
+{
+  "userPromptText": "Jakie książki polecsz pod kątem devops"
+}
+
+###
+
+POST http://localhost:8080/rag-filter-by-metadata?year=2015&genre=Programming
+Content-Type: application/json
+
+{
+  "userPromptText": "Compare those books"
+}
 
 
 
